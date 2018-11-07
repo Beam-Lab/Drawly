@@ -1,4 +1,20 @@
-﻿var mirror = document.getElementById('preview');
+﻿$(document).ready(function () {
+
+    $('#ShareUrl').val(document.URL);
+
+    $('#shareButton').click(function () {
+
+        var copyText = document.getElementById("ShareUrl");
+
+        copyText.select();
+        document.execCommand("copy");
+
+        alert("Your whiteboard url is on your clipboard");
+    });
+
+});
+
+var mirror = document.getElementById('preview');
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var canvasx = $(canvas).offset().left;
@@ -46,7 +62,7 @@ $(canvas).on('mousemove', function (e) {
 
     last_mousex = mousex;
     last_mousey = mousey;
-    $('#output').html('current: ' + mousex + ', ' + mousey + '<br />last: ' + last_mousex + ', ' + last_mousey + '<br />mousedown: ' + mousedown);
+    // $('#output').html('current: ' + mousex + ', ' + mousey + '<br />last: ' + last_mousex + ', ' + last_mousey + '<br />mousedown: ' + mousedown);
 });
 
 var mouse_down = false;
@@ -59,7 +75,13 @@ connection.on('Draw', function (prev_x, prev_y, x, y, clr, sz) {
     drawCanvas(prev_x, prev_y, x, y, clr, sz);
 });
 
-connection.start();
+connection.on('updateonlineusers', function (onlineusers) {
+    $("#onlineusers").html(onlineusers);
+});
+
+connection.start().then(function () {
+    connection.invoke('joinwhiteboard', GetQuerystringParameter("whiteboard"));
+});
 
 clearMousePositions = function () {
     last_mousex = 0;
@@ -71,7 +93,7 @@ function UpdatePreview() {
     mirror.src = dataURL;
 }
 
-dragElement(document.getElementById("toolbar"));
+dragElement(document.getElementsByClassName("toolbar"));
 
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -126,3 +148,10 @@ buttonClear.addEventListener('click', function (e) {
 
     UpdatePreview();
 });
+
+function GetQuerystringParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const param = urlParams.get(name);
+
+    return param;
+}
