@@ -26,7 +26,7 @@ var tooltype = 'draw';
 
 $(canvas).on('mousedown', function (e) {
     last_mousex = mousex = parseInt(e.clientX - canvasx + document.documentElement.scrollLeft);
-    last_mousey = mousey = parseInt(e.clientY - canvasy - document.documentElement.scrollTop);
+    last_mousey = mousey = parseInt(e.clientY - canvasy + document.documentElement.scrollTop);
     mousedown = true;
 });
 
@@ -49,8 +49,8 @@ var drawCanvas = function (prev_x, prev_y, x, y, clr, sz) {
 };
 
 $(canvas).on('mousemove', function (e) {
-    mousex = parseInt(e.clientX - canvasx);
-    mousey = parseInt(e.clientY - canvasy);
+    mousex = parseInt(e.clientX - canvasx + document.documentElement.scrollLeft);
+    mousey = parseInt(e.clientY - canvasy + document.documentElement.scrollTop);
 
     var clr = $('select[id=color]').val();
     var sz = $('select[id=size]').val();
