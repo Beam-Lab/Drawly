@@ -71,6 +71,17 @@ var connection = new signalR.HubConnectionBuilder()
     .withUrl('/draw')
     .build();
 
+function DrawBackground()
+{
+    var base_image = new Image();
+    base_image.src = 'https://media.istockphoto.com/vectors/santa-claus-christmas-fling-sleigh-sled-reindee-vector-id1030835344?s=2048x2048';
+    base_image.onload = function () {
+        ctx.drawImage(base_image, 0, 0);
+    };
+}
+
+DrawBackground();
+
 connection.on('Draw', function (prev_x, prev_y, x, y, clr, sz) {
     drawCanvas(prev_x, prev_y, x, y, clr, sz);
 });
@@ -93,17 +104,19 @@ function UpdatePreview() {
     mirror.src = dataURL;
 }
 
-dragElement(document.getElementsByClassName("toolbar"));
+dragElement(document.getElementById("toolbar"));
 
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (document.getElementById(elmnt.id + "header")) {
+    if (document.getElementById(elmnt.id + "Header")) {
         /* if present, the header is where you move the DIV from:*/
-        document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+        document.getElementById(elmnt.id + "Header").onmousedown = dragMouseDown;
     } else {
         /* otherwise, move the DIV from anywhere inside the DIV:*/
         elmnt.onmousedown = dragMouseDown;
     }
+
+    //document.getElementById("toolbar").onmousedown = dragMouseDown;
 
     function dragMouseDown(e) {
         e = e || window.event;
