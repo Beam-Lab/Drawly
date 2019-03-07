@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Whiteboard";
+}
+
+<div style="position: fixed; right: 20px; width: 200px; height: 200px; margin: 8px; background-color: #eee; opacity: 0.5">
+
+    <img height="200px" width="200px" id="preview" />
+
+</div>
+
+<div>
+    <canvas id="canvas" class="whiteboardcanvas" height="2000" width="2000"></canvas>
+</div>
+
+<div class="toolbar" id="toolbar">
+
+    <div class="toolbarHeader" id="toolbarHeader">Toolbar</div>
+
+    <div class="toolbarBody">
+
+        <select id="color">
+            <option value="black">Black</option>
+            <option value="red">Red</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+        </select>
+        <select id="size">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <div id="output"></div>
+        Online Users: <div id="onlineusers"></div>
+
+        Share Url: <input type="text" id="ShareUrl" disabled />
+        <button id="shareButton" class="btn btn-default">Share Whiteboard</button>
+
+        <a href="#" class="button" id="btn-clear">Clear</a> |
+        <a href="#" target="_blank" class="button" id="btn-download">Download</a>
+
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/whiteboard.js" asp-append-version="true"></script>
+
+}
